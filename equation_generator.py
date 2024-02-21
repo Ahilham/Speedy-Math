@@ -14,9 +14,10 @@ class EquationGenerator:
     def equation_gen( level: int):
         range = []
         operation = ['+', '-', '/', 'x']
+        Linear = [1, 2]
 
         if level == 1:
-            range = [0, 10]
+            range = [1, 10]
             
         elif level == 2:
             range = [10, 100]
@@ -33,16 +34,24 @@ class EquationGenerator:
                 b = random.randint(range[0],range[1])
                 divi = (a / b) % 2
 
-
-
-        equation = f"{a} {operator} {b} = ___"
         answer = EquationGenerator.logic[operator](a, b)
 
-        return int(answer), equation
+        unknown_rand = random.choice(Linear)
+
+        if unknown_rand == 1:
+            equation = f"Y {operator} {b} = {int(answer)}"
+            unk = a
+        else:
+            equation = f"{a} {operator} Y = {int(answer)}"
+            unk = b
+
+        
+
+        return int(unk), equation
 
 if __name__ == "__main__":
 
-    ans, question = EquationGenerator.equation_gen(1)
+    ans, question = EquationGenerator.equation_gen(2)
 
     print(question)
     print(ans)
