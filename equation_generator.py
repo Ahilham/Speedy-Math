@@ -1,4 +1,5 @@
 import random
+import math
 
 class EquationGenerator:
     logic = {
@@ -12,27 +13,36 @@ class EquationGenerator:
     @staticmethod
     def equation_gen( level: int):
         range = []
-        operation = []
+        operation = ['+', '-', '/', 'x']
 
         if level == 1:
             range = [0, 10]
-            operation = ['+', '-']
+            
         elif level == 2:
             range = [10, 100]
-            operation = ['+', '-', '/', 'x']
+        
 
         a = random.randint(range[0],range[1])
         b = random.randint(range[0],range[1])
         operator = random.choice(operation)
 
+        if operator == '/':
+            divi = (a / b) % 2
+            while divi != 0:
+                a = random.randint(range[0],range[1])
+                b = random.randint(range[0],range[1])
+                divi = (a / b) % 2
+
+
+
         equation = f"{a} {operator} {b} = ___"
         answer = EquationGenerator.logic[operator](a, b)
 
-        return round(answer, 2), equation
+        return int(answer), equation
 
 if __name__ == "__main__":
 
-    ans, question = EquationGenerator.equation_gen(2)
+    ans, question = EquationGenerator.equation_gen(1)
 
     print(question)
     print(ans)
