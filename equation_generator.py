@@ -19,7 +19,7 @@ class EquationGenerator:
         if level == 1:
             range = [1, 10]
             
-        elif level == 2:
+        else:
             range = [10, 100]
         
 
@@ -27,6 +27,7 @@ class EquationGenerator:
         b = random.randint(range[0],range[1])
         operator = random.choice(operation)
 
+        #making sure division problems are whole number
         if operator == '/':
             divi = (a / b) % 2
             while divi != 0:
@@ -36,14 +37,41 @@ class EquationGenerator:
 
         answer = EquationGenerator.logic[operator](a, b)
 
-        unknown_rand = random.choice(Linear)
+        if level == 1 or level == 2:
 
-        if unknown_rand == 1:
-            equation = f"Y {operator} {b} = {int(answer)}"
-            unk = a
+            unknown_rand = random.choice(Linear)
+
+            if unknown_rand == 1:
+                equation = f"Y {operator} {b} = {int(answer)}"
+                unk = a
+            else:
+                equation = f"{a} {operator} Y = {int(answer)}"
+                unk = b
         else:
-            equation = f"{a} {operator} Y = {int(answer)}"
-            unk = b
+            c = random.randint(range[0],range[1])
+            operator2 = random.choice(operation)
+            answer2 = EquationGenerator.logic[operator2](answer, c)
+
+            
+
+            Linear.append(3)
+
+            unknown_rand = random.choice(Linear)
+
+            if unknown_rand == 1:
+                equation = f"Y {operator} {b} {operator2} {c} = {int(answer2)}"
+                unk = a
+            elif unknown_rand == 2:
+                equation = f"{a} {operator} Y {operator2} {c} = {int(answer2)}"
+                unk = b
+            else:
+                equation = f"{a} {operator} {b} {operator2} Y = {int(answer2)}"
+                unk = c
+
+
+
+
+        
 
         
 
@@ -51,7 +79,7 @@ class EquationGenerator:
 
 if __name__ == "__main__":
 
-    ans, question = EquationGenerator.equation_gen(2)
+    ans, question = EquationGenerator.equation_gen(3)
 
     print(question)
     print(ans)
