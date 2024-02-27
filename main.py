@@ -21,7 +21,8 @@ CLOCK = pygame.time.Clock()
 
 #Title and Icon
 pygame.display.set_caption("Speedy Math")
-curren_dir = os.path.dirname(__file__)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+curren_dir = os.path.join(script_dir, "assets_math")
 icon_file_name = 'Math_Play_icon.png'
 background_file_name = 'blackboard.png'
 play_file_name = 'Play_button.png'
@@ -65,8 +66,13 @@ highest_lvl_3 = 0
 
 
 #main game
-def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.SysFont(pygame.font.get_default_font(), size)
+def get_font(size):
+    
+    fonting = pygame.font.SysFont("freesansbold", size)
+    
+    
+    return fonting
+    
 
 
 
@@ -97,7 +103,7 @@ def level_1():
         UI_refresh_rate = CLOCK.tick(60)/1000
         LEVEL_1_MOUSE_POS = pygame.mouse.get_pos()
 
-        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
         
 
 
@@ -186,7 +192,7 @@ def level_2():
         UI_refresh_rate = CLOCK.tick(60)/1000
         LEVEL_2_MOUSE_POS = pygame.mouse.get_pos()
 
-        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
         
 
 
@@ -275,7 +281,7 @@ def level_3():
         UI_refresh_rate = CLOCK.tick(60)/1000
         LEVEL_3_MOUSE_POS = pygame.mouse.get_pos()
 
-        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
         
 
 
@@ -344,10 +350,10 @@ def play():
 
         screen.blit(background, (0, 0))
 
-        button_level_1 = Button(image = button_play_image, pos = (400, 150), text_input = "LEVEL 1", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
-        button_level_2 = Button(image = button_play_image, pos = (400, 300), text_input = "LEVEL 2", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
-        button_level_3 = Button(image = button_play_image, pos = (400, 450), text_input = "LEVEL 3", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
-        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_level_1 = Button(image = button_play_image, pos = (400, 150), text_input = "LEVEL 1", font = get_font(30), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_level_2 = Button(image = button_play_image, pos = (400, 300), text_input = "LEVEL 2", font = get_font(30), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_level_3 = Button(image = button_play_image, pos = (400, 450), text_input = "LEVEL 3", font = get_font(30), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_back = Button(image = button_play_image, pos = (200,150), text_input="BACK", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
 
         
         button_level_1.changeColor(PLAY_MOUSE_POS)
@@ -387,8 +393,8 @@ def main_menu():
     while True:
         screen.blit(background, (0, 0))
         
-        button_play = Button(image = button_play_image, pos = (400, 400), text_input = "PLAY", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
-        button_quit = Button(image = button_play_image, pos = (400, 500), text_input = "QUIT", font = get_font(55), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_play = Button(image = button_play_image, pos = (400, 400), text_input = "PLAY", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_quit = Button(image = button_play_image, pos = (400, 500), text_input = "QUIT", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
         MENU_RECT = logo_image.get_rect(center = (400, 200))
@@ -418,4 +424,6 @@ def main_menu():
 
 
 if __name__ == "__main__":
+    
+
     main_menu()
