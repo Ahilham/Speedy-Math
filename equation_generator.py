@@ -1,5 +1,5 @@
 import random
-import math
+
 
 class EquationGenerator:
     logic = {
@@ -13,14 +13,14 @@ class EquationGenerator:
     @staticmethod
     def equation_gen( level: int):
         range = []
-        operation = ['+', '-', '/', 'x']
         Linear = [1, 2]
+        range = [1, 10]
 
         if level == 1:
-            range = [1, 10]
+            operation = ['+', '-']
             
         else:
-            range = [10, 100]
+            operation = ['+', '-', '/', 'x']
         
 
         a = random.randint(range[0],range[1])
@@ -79,9 +79,31 @@ class EquationGenerator:
 
 if __name__ == "__main__":
 
-    ans, question = EquationGenerator.equation_gen(3)
+    point = 0
+    playing = True
+    while playing:
+        test = True
+        # useer = input("1 to play, 2 to exit")
+        if int(useer) == 2:
+            print(f"Points: {point}")
+            playing = False
+            test = False
+            break
 
-    print(question)
-    print(ans)
+        ans, question = EquationGenerator.equation_gen(1)
+
+        print(question)
+        print(ans)
+        
+        while test:
+            
+            user_ans = input("What is Y?")
+            if int(user_ans) == ans:
+                point += 10
+                
+                test = False
+                
+            else:
+                print("Answer is incorrect!")
 
 # find a way for level 2 fo division, make it easier as in whole number answer only
