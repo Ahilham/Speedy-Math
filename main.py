@@ -91,7 +91,6 @@ def level_1():
     def check_answer(answer: int, lvl: int):
         nonlocal ans, equation, point1
         
-
         if int(answer) == ans:
             ans, equation = EquationGenerator.equation_gen(level=lvl)
             point1 += 10

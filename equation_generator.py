@@ -1,13 +1,14 @@
 import random
+import operator
 
 
 class EquationGenerator:
     logic = {
    
-        '+' : lambda x, y: x + y,
-        '-' : lambda x, y: x - y,
-        '/' : lambda x, y: x / y,
-        'x' : lambda x, y: x * y
+        '+' : operator.add,
+        '-' : operator.sub,
+        '/' : operator.truediv,
+        'x' : operator.mul
     }
 
     @staticmethod
@@ -28,16 +29,18 @@ class EquationGenerator:
         operator = random.choice(operation)
 
         #making sure division problems are whole number
-        if operator == '/':
-            divi = (a / b) % 2
-            while divi != 0:
-                a = random.randint(range[0],range[1])
-                b = random.randint(range[0],range[1])
-                divi = (a / b) % 2
+        
 
         answer = EquationGenerator.logic[operator](a, b)
 
         if level == 1 or level == 2:
+
+            if operator == '/':
+                divi = (a / b) % 2
+                while divi != 0:
+                    a = random.randint(range[0],range[1])
+                    b = random.randint(range[0],range[1])
+                    divi = (a / b) % 2
 
             unknown_rand = random.choice(Linear)
 
@@ -48,9 +51,38 @@ class EquationGenerator:
                 equation = f"{a} {operator} Y = {int(answer)}"
                 unk = b
         else:
-            c = random.randint(range[0],range[1])
-            operator2 = random.choice(operation)
-            answer2 = EquationGenerator.logic[operator2](answer, c)
+            answer2 = 3
+            while answer2 % 2 != 0:
+                a = random.randint(range[0],range[1])
+                b = random.randint(range[0],range[1])
+                c = random.randint(range[0],range[1])
+                operator = random.choice(operation)
+                operator2 = random.choice(operation)
+                
+                if (operator2 == "/" or operator2 == "x") and (operator != "/" or operator != "x"):
+                    
+
+                    if operator2 == '/':
+                        divi = (b / c) % 2
+                        while divi != 0:
+                            b = random.randint(range[0],range[1])
+                            c = random.randint(range[0],range[1])
+                            divi = (b / c) % 2
+
+                    answer = EquationGenerator.logic[operator2](b, c)
+                    answer2 = EquationGenerator.logic[operator](a, answer)
+                else:
+                    if operator == '/':
+                        divi = (b / c) % 2
+                        while divi != 0:
+                            b = random.randint(range[0],range[1])
+                            c = random.randint(range[0],range[1])
+                            divi = (b / c) % 2
+                    
+                    answer = EquationGenerator.logic[operator](a, b)
+                    answer2 = EquationGenerator.logic[operator2](answer, c)
+                        
+
 
             
 
@@ -75,35 +107,10 @@ class EquationGenerator:
 
         
 
-        return int(unk), equation
-
+        return int(unk), equation, a, b, c
+    
 if __name__ == "__main__":
+    ans, equation,a ,b ,c = EquationGenerator.equation_gen(3)
+    print(f"{equation} {a} {b} {c}")
+    print(ans)
 
-    point = 0
-    playing = True
-    while playing:
-        test = True
-        # useer = input("1 to play, 2 to exit")
-        if int(useer) == 2:
-            print(f"Points: {point}")
-            playing = False
-            test = False
-            break
-
-        ans, question = EquationGenerator.equation_gen(1)
-
-        print(question)
-        print(ans)
-        
-        while test:
-            
-            user_ans = input("What is Y?")
-            if int(user_ans) == ans:
-                point += 10
-                
-                test = False
-                
-            else:
-                print("Answer is incorrect!")
-
-# find a way for level 2 fo division, make it easier as in whole number answer only
