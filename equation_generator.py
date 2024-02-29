@@ -107,10 +107,10 @@ class EquationGenerator:
 
         
 
-        return int(unk), equation, a, b, c
+        return int(unk), equation
     
-if __name__ == "__main__":
-    ans, equation,a ,b ,c = EquationGenerator.equation_gen(3)
-    print(f"{equation} {a} {b} {c}")
-    print(ans)
+# if __name__ == "__main__":
+#     ans, equation,a ,b ,c = EquationGenerator.equation_gen(3)
+#     print(f"{equation} {a} {b} {c}")
+#     print(ans)
 
