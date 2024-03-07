@@ -8,6 +8,7 @@ import pygame_gui
 
 #initialize the pygame
 pygame.init()
+# pygame.mixer.init()
 
 width: Final = 800
 height: Final = 600
@@ -28,10 +29,12 @@ background_file_name = 'blackboard.png'
 play_file_name = 'Play_button.png'
 play_pressed_file_name = 'Play_button_pressed.png'
 logo_file_name = 'logo_menu.png'
+correct_sound_file = 'videoplayback.mp3'
 background_path: Final = os.path.join(curren_dir, background_file_name) 
 icon_path: Final = os.path.join(curren_dir, icon_file_name)
 play_button_path: Final = os.path.join(curren_dir, play_file_name)
 logo_path: Final = os.path.join(curren_dir, logo_file_name)
+correct_sound_path = os.path.join(curren_dir, correct_sound_file)
 
 main_font: Final = pygame.font.SysFont("cambria", 50)
 background = pygame.image.load(background_path)
@@ -41,6 +44,7 @@ button_play_image = pygame.image.load(play_button_path)
 button_play_image = pygame.transform.scale(button_play_image, (150, 100))
 logo_image = pygame.image.load(logo_path)
 logo_image: Final = pygame.transform.scale(logo_image, (400, 300))
+# correct_sound = pygame.mixer.Sound(correct_sound_path)
 
 text_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((355, 400), (100, 100)), manager=MANAGER, object_id="#main_text_entry")
 
@@ -55,14 +59,36 @@ pygame.time.set_timer(timer_minus, 1000)
 pygame.display.set_icon(icon)
 
 #Points
+highest_lvl = [0, 0, 0]
 
-highest_lvl_1 = 0
+file_point_path = os.path.join(curren_dir,'score_point.txt')
+
+def write_file_points():
+    with open(file_point_path, 'w') as point_system:
+            point_system.write(f'{highest_lvl[0]},{highest_lvl[1]},{highest_lvl[2]}')
 
 
-highest_lvl_2 = 0
+
+if os.path.exists(file_point_path):
+    if os.path.getsize(file_point_path) > 0:
+        #take in data
+        with open(file_point_path, 'r') as point_system:
+            points = point_system.readline()
+            highest_lvl[0], highest_lvl[1], highest_lvl[2] = points.split(',')
+        
+        
+    else:
+        #write data into file
+        write_file_points()
+else:
+    #create and write data into file
+    write_file_points()
+    
 
 
-highest_lvl_3 = 0
+
+
+
 
 
 #main game
@@ -77,7 +103,7 @@ def get_font(size):
 
 
 def level_1():
-    global highest_lvl_1
+    global highest_lvl
     
     point1 = 0
     level = 1
@@ -92,6 +118,7 @@ def level_1():
         nonlocal ans, equation, point1
         
         if int(answer) == ans:
+            # correct_sound.play(maxtime=1)
             ans, equation = EquationGenerator.equation_gen(level=lvl)
             point1 += 10
         else:
@@ -144,13 +171,14 @@ def level_1():
             screen.blit(question_text, question_text_rect)
 
         else:
-            if point1 > highest_lvl_1:
-                highest_lvl_1 = point1
+            if point1 > int(highest_lvl[0]):
+                highest_lvl[0] = point1
+                write_file_points()
 
             point_text = main_font.render(f"Point: {point1}", True, "white")
             point_text_rect = point_text.get_rect(center=(400,300))
 
-            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl_1}", True, "white")
+            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl[0]}", True, "white")
             point_text_high_score_rect = point_text.get_rect(center=(400,400))
 
             screen.blit(point_text, point_text_rect)
@@ -165,7 +193,7 @@ def level_1():
         pygame.display.update()
 
 def level_2():
-    global highest_lvl_2
+    global highest_lvl
        
     point2 = 0
     level = 2
@@ -233,13 +261,14 @@ def level_2():
             screen.blit(question_text, question_text_rect)
 
         else:
-            if point2 > highest_lvl_2:
-                highest_lvl_2 = point2
+            if point2 > int(highest_lvl[1]):
+                highest_lvl[1] = point2
+                write_file_points()
 
             point_text = main_font.render(f"Point: {point2}", True, "white")
             point_text_rect = point_text.get_rect(center=(400,300))
 
-            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl_2}", True, "white")
+            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl[1]}", True, "white")
             point_text_high_score_rect = point_text.get_rect(center=(400,400))
 
             screen.blit(point_text, point_text_rect)
@@ -254,7 +283,7 @@ def level_2():
         pygame.display.update()
 
 def level_3():
-    global highest_lvl_3
+    global highest_lvl
        
     point3 = 0
     level = 3
@@ -322,13 +351,14 @@ def level_3():
             screen.blit(question_text, question_text_rect)
 
         else:
-            if point3 > highest_lvl_2:
-                highest_lvl_2 = point3
+            if point3 > int(highest_lvl[2]):
+                highest_lvl[2] = point3
+                write_file_points()
 
             point_text = main_font.render(f"Point: {point3}", True, "white")
             point_text_rect = point_text.get_rect(center=(400,300))
 
-            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl_3}", True, "white")
+            point_text_high_score = main_font.render(f"Highest Score: {highest_lvl[2]}", True, "white")
             point_text_high_score_rect = point_text.get_rect(center=(400,400))
 
             screen.blit(point_text, point_text_rect)
