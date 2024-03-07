@@ -31,7 +31,7 @@ class EquationGenerator:
         #making sure division problems are whole number
         
 
-        answer = EquationGenerator.logic[operator](a, b)
+        
 
         if level == 1 or level == 2:
 
@@ -41,7 +41,8 @@ class EquationGenerator:
                     a = random.randint(range[0],range[1])
                     b = random.randint(range[0],range[1])
                     divi = (a / b) % 2
-
+            
+            answer = EquationGenerator.logic[operator](a, b)
             unknown_rand = random.choice(Linear)
 
             if unknown_rand == 1:
@@ -110,7 +111,7 @@ class EquationGenerator:
         return int(unk), equation
     
 # if __name__ == "__main__":
-#     ans, equation,a ,b ,c = EquationGenerator.equation_gen(3)
-#     print(f"{equation} {a} {b} {c}")
+#     ans, equation,a ,b  = EquationGenerator.equation_gen(2)
+#     print(f"{equation} {a} {b}")
 #     print(ans)
 

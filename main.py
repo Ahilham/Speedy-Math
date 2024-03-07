@@ -371,6 +371,46 @@ def level_3():
     
     
         pygame.display.update()
+
+def high_score():
+    while True:
+        screen.blit(background, (0, 0))
+        
+        button_back= Button(image = button_play_image, pos = (150, 150), text_input = "BACK", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
+
+        HIGH_SCORE_MOUSE_POS = pygame.mouse.get_pos()
+
+
+        button_back.changeColor(HIGH_SCORE_MOUSE_POS)
+        button_back.update(screen)
+
+        lvl_1_score_text = main_font.render(f"Level 1: {highest_lvl[0]}", True, "white")
+        lvl_1_score_text_rect = lvl_1_score_text.get_rect(center=(450,150))
+
+        lvl_2_score_text = main_font.render(f"Level 2: {highest_lvl[1]}", True, "white")
+        lvl_2_score_text_rect = lvl_2_score_text.get_rect(center=(450,300))
+
+        lvl_3_score_text = main_font.render(f"Level 3: {highest_lvl[2]}", True, "white")
+        lvl_3_score_text_rect = lvl_3_score_text.get_rect(center=(450,450))
+
+        screen.blit(lvl_1_score_text,lvl_1_score_text_rect)
+        screen.blit(lvl_2_score_text,lvl_2_score_text_rect)
+        screen.blit(lvl_3_score_text,lvl_3_score_text_rect)
+
+
+        
+	
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_back.checkForInput(HIGH_SCORE_MOUSE_POS):
+                    main_menu()
+
+        pygame.display.update()
+
         
 
 def play():
@@ -422,16 +462,20 @@ def main_menu():
     while True:
         screen.blit(background, (0, 0))
         
-        button_play = Button(image = button_play_image, pos = (400, 400), text_input = "PLAY", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
-        button_quit = Button(image = button_play_image, pos = (400, 500), text_input = "QUIT", font = get_font(35), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_play = Button(image = button_play_image, pos = (400, 300), text_input = "PLAY", font = get_font(20), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_quit = Button(image = button_play_image, pos = (400, 500), text_input = "QUIT", font = get_font(20), base_color = "#ffffff", hovering_color = "#807a7a")
+        button_high_score = Button(image = button_play_image, pos = (400, 400), text_input = "HIGH-SCORE", font = get_font(20), base_color = "#ffffff", hovering_color = "#807a7a")
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
-        MENU_RECT = logo_image.get_rect(center = (400, 200))
+        MENU_RECT = logo_image.get_rect(center = (400, 150))
 
         screen.blit(logo_image, MENU_RECT)
 
         button_play.changeColor(MENU_MOUSE_POS)
         button_play.update(screen)
+
+        button_high_score.changeColor(MENU_MOUSE_POS)
+        button_high_score.update(screen)
 
         button_quit.changeColor(MENU_MOUSE_POS)
         button_quit.update(screen)
@@ -446,6 +490,8 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_play.checkForInput(MENU_MOUSE_POS):
                     play()
+                if button_high_score.checkForInput(MENU_MOUSE_POS):
+                    high_score()
                 if button_quit.checkForInput(MENU_MOUSE_POS):
                     quit()
 
