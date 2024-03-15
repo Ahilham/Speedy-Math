@@ -107,7 +107,7 @@ def level_1():
     
     point1 = 0
     level = 1
-    curr_seconds = 75
+    curr_seconds = 110
     
     ans, equation = EquationGenerator.equation_gen(level=level)
 
@@ -287,7 +287,7 @@ def level_3():
        
     point3 = 0
     level = 3
-    curr_seconds = 120
+    curr_seconds = 60
     
     ans, equation = EquationGenerator.equation_gen(level=level)
 
